@@ -36,6 +36,7 @@ local Yes = Instance.new("TextButton")
 local Error = Instance.new("TextLabel")
 local credits2 = Instance.new("Frame")
 local extra2 = Instance.new("Frame")
+local KillAll = Instance.new("TextButton")
 local mainv2 = Instance.new("Frame")
 local visuals2 = Instance.new("Frame")
 local FOV = Instance.new("Frame")
@@ -44,11 +45,12 @@ local FOVValue = Instance.new("TextLabel")
 local Slider = Instance.new("Frame")
 local Knob = Instance.new("Frame")
 local UICorner_9 = Instance.new("UICorner")
+local TextButton_2 = Instance.new("TextButton")
 
 --Properties:
 
 client.Name = "client"
-client.Parent = game.Workspace
+client.Parent = game.CoreGui
 
 main.Name = "main"
 main.Parent = client
@@ -78,7 +80,6 @@ background.Name = "background"
 background.Parent = main
 background.AnchorPoint = Vector2.new(0.5, 0.5)
 background.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-background.BackgroundTransparency = 1.000
 background.Position = UDim2.new(0.5, 0, 0.5, 0)
 background.Size = UDim2.new(0, 458, 0, 678)
 
@@ -358,6 +359,22 @@ extra2.Size = UDim2.new(0.989000022, 0, 0.799000025, 0)
 extra2.Visible = false
 extra2.ZIndex = 3
 
+KillAll.Name = "Kill All"
+KillAll.Parent = extra2
+KillAll.BackgroundColor3 = Color3.fromRGB(84, 84, 84)
+KillAll.BackgroundTransparency = 1.000
+KillAll.BorderColor3 = Color3.fromRGB(0, 0, 0)
+KillAll.BorderSizePixel = 4
+KillAll.Position = UDim2.new(0, 0, 0, 44)
+KillAll.Size = UDim2.new(0, 102, 0, 18)
+KillAll.ZIndex = 6
+KillAll.Font = Enum.Font.SciFi
+KillAll.Text = "Kill All"
+KillAll.TextColor3 = Color3.fromRGB(255, 255, 255)
+KillAll.TextSize = 30.000
+KillAll.TextStrokeTransparency = 0.500
+KillAll.TextWrapped = true
+
 mainv2.Name = "mainv2"
 mainv2.Parent = main
 mainv2.BackgroundColor3 = Color3.fromRGB(25, 255, 0)
@@ -431,9 +448,25 @@ Knob.ZIndex = 5
 
 UICorner_9.Parent = Knob
 
+TextButton_2.Parent = main
+TextButton_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton_2.BackgroundTransparency = 1.000
+TextButton_2.Position = UDim2.new(0.871681392, 0, 0, 0)
+TextButton_2.Rotation = 36.000
+TextButton_2.Size = UDim2.new(0, 61, 0, 37)
+TextButton_2.ZIndex = 8
+TextButton_2.Font = Enum.Font.PermanentMarker
+TextButton_2.Text = "X"
+TextButton_2.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextButton_2.TextScaled = true
+TextButton_2.TextSize = 14.000
+TextButton_2.TextStrokeColor3 = Color3.fromRGB(130, 130, 130)
+TextButton_2.TextStrokeTransparency = 0.300
+TextButton_2.TextWrapped = true
+
 -- Scripts:
 
-local function ECAFMX_fake_script() -- background.LocalScript 
+local function CUDNG_fake_script() -- background.LocalScript 
 	local script = Instance.new('LocalScript', background)
 
 	
@@ -444,93 +477,8 @@ local function ECAFMX_fake_script() -- background.LocalScript
 	local Tween = TweenService:Create(script.Parent.UIGradient, TweenInformation, Goal) -- Creates the tween and the parameters are: UIGradient (object) location, TweenInformation, and Goal.
 	Tween:Play() -- Plays the Tween
 end
-coroutine.wrap(ECAFMX_fake_script)()
-local function RCTCDWF_fake_script() -- main.LocalScript 
-	local script = Instance.new('LocalScript', main)
-
-	repeat wait()
-	until game.Players.LocalPlayer and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:findFirstChild("Torso") and game.Players.LocalPlayer.Character:findFirstChild("Humanoid")
-	local mouse = game.Players.LocalPlayer:GetMouse()
-	repeat wait() until mouse
-	local plr = game.Players.LocalPlayer
-	local torso = plr.Character.Torso
-	local flying = true
-	local deb = true
-	local ctrl = {f = 0, b = 0, l = 0, r = 0}
-	local lastctrl = {f = 0, b = 0, l = 0, r = 0}
-	local maxspeed = 50
-	local speed = 0
-	
-	function Fly()
-		local bg = Instance.new("BodyGyro", torso)
-		bg.P = 9e4
-		bg.maxTorque = Vector3.new(9e9, 9e9, 9e9)
-		bg.cframe = torso.CFrame
-		local bv = Instance.new("BodyVelocity", torso)
-		bv.velocity = Vector3.new(0,0.1,0)
-		bv.maxForce = Vector3.new(9e9, 9e9, 9e9)
-		repeat wait()
-			plr.Character.Humanoid.PlatformStand = true
-			if ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0 then
-				speed = speed+.5+(speed/maxspeed)
-				if speed > maxspeed then
-					speed = maxspeed
-				end
-			elseif not (ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0) and speed ~= 0 then
-				speed = speed-1
-				if speed < 0 then
-					speed = 0
-				end
-			end
-			if (ctrl.l + ctrl.r) ~= 0 or (ctrl.f + ctrl.b) ~= 0 then
-				bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (ctrl.f+ctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(ctrl.l+ctrl.r,(ctrl.f+ctrl.b)*.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed
-				lastctrl = {f = ctrl.f, b = ctrl.b, l = ctrl.l, r = ctrl.r}
-			elseif (ctrl.l + ctrl.r) == 0 and (ctrl.f + ctrl.b) == 0 and speed ~= 0 then
-				bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (lastctrl.f+lastctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(lastctrl.l+lastctrl.r,(lastctrl.f+lastctrl.b)*.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed
-			else
-				bv.velocity = Vector3.new(0,0.1,0)
-			end
-			bg.cframe = game.Workspace.CurrentCamera.CoordinateFrame * CFrame.Angles(-math.rad((ctrl.f+ctrl.b)*50*speed/maxspeed),0,0)
-		until not flying
-		ctrl = {f = 0, b = 0, l = 0, r = 0}
-		lastctrl = {f = 0, b = 0, l = 0, r = 0}
-		speed = 0
-		bg:Destroy()
-		bv:Destroy()
-		plr.Character.Humanoid.PlatformStand = false
-	end
-	mouse.KeyDown:connect(function(key)
-		if key:lower() == "e" then
-			if flying then flying = false
-			else
-				flying = true
-				Fly()
-			end
-		elseif key:lower() == "w" then
-			ctrl.f = 1
-		elseif key:lower() == "s" then
-			ctrl.b = -1
-		elseif key:lower() == "a" then
-			ctrl.l = -1
-		elseif key:lower() == "d" then
-			ctrl.r = 1
-		end
-	end)
-	mouse.KeyUp:connect(function(key)
-		if key:lower() == "w" then
-			ctrl.f = 0
-		elseif key:lower() == "s" then
-			ctrl.b = 0
-		elseif key:lower() == "a" then
-			ctrl.l = 0
-		elseif key:lower() == "d" then
-			ctrl.r = 0
-		end
-	end)
-	Fly()
-end
-coroutine.wrap(RCTCDWF_fake_script)()
-local function CLBSK_fake_script() -- player.open/close 
+coroutine.wrap(CUDNG_fake_script)()
+local function UYWBJDC_fake_script() -- player.open/close 
 	local script = Instance.new('LocalScript', player)
 
 	script.Parent.MouseButton1Click:Connect(function()
@@ -552,8 +500,8 @@ local function CLBSK_fake_script() -- player.open/close
 		end)
 	
 end
-coroutine.wrap(CLBSK_fake_script)()
-local function EYEN_fake_script() -- visuals.open/close 
+coroutine.wrap(UYWBJDC_fake_script)()
+local function JERG_fake_script() -- visuals.open/close 
 	local script = Instance.new('LocalScript', visuals)
 
 	script.Parent.MouseButton1Click:Connect(function()
@@ -575,8 +523,8 @@ local function EYEN_fake_script() -- visuals.open/close
 		end)
 	
 end
-coroutine.wrap(EYEN_fake_script)()
-local function GLBT_fake_script() -- main2.open/close 
+coroutine.wrap(JERG_fake_script)()
+local function GGXLE_fake_script() -- main2.open/close 
 	local script = Instance.new('LocalScript', main2)
 
 	script.Parent.MouseButton1Click:Connect(function()
@@ -598,8 +546,8 @@ local function GLBT_fake_script() -- main2.open/close
 		end)
 	
 end
-coroutine.wrap(GLBT_fake_script)()
-local function CHVV_fake_script() -- extra.open/close 
+coroutine.wrap(GGXLE_fake_script)()
+local function DHZFHL_fake_script() -- extra.open/close 
 	local script = Instance.new('LocalScript', extra)
 
 	script.Parent.MouseButton1Click:Connect(function()
@@ -621,8 +569,8 @@ local function CHVV_fake_script() -- extra.open/close
 		end)
 	
 end
-coroutine.wrap(CHVV_fake_script)()
-local function BWMZD_fake_script() -- credits.open/close 
+coroutine.wrap(DHZFHL_fake_script)()
+local function HTHVMV_fake_script() -- credits.open/close 
 	local script = Instance.new('LocalScript', credits)
 
 	script.Parent.MouseButton1Click:Connect(function()
@@ -644,8 +592,8 @@ local function BWMZD_fake_script() -- credits.open/close
 		end)
 	
 end
-coroutine.wrap(BWMZD_fake_script)()
-local function RZWE_fake_script() -- main.click tp 
+coroutine.wrap(HTHVMV_fake_script)()
+local function HIVRVF_fake_script() -- main.click tp 
 	local script = Instance.new('LocalScript', main)
 
 	local player = game:GetService("Players").LocalPlayer
@@ -669,7 +617,7 @@ local function RZWE_fake_script() -- main.click tp
 			Teleport()
 		end
 		if tp.UserInputType == Enum.UserInputType.Keyboard then
-			if tp.KeyCode == Enum.KeyCode.LeftAlt then
+			if tp.KeyCode == Enum.KeyCode.L then
 				if tpMode == true then
 					tpMode = false
 					mouse.Icon = ""
@@ -681,8 +629,8 @@ local function RZWE_fake_script() -- main.click tp
 		end
 	end)
 end
-coroutine.wrap(RZWE_fake_script)()
-local function ONOKS_fake_script() -- TextButton.LocalScript 
+coroutine.wrap(HIVRVF_fake_script)()
+local function MSBII_fake_script() -- TextButton.LocalScript 
 	local script = Instance.new('LocalScript', TextButton)
 
 	------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -766,8 +714,8 @@ local function ONOKS_fake_script() -- TextButton.LocalScript
 		end
 	end)
 end
-coroutine.wrap(ONOKS_fake_script)()
-local function ORGBP_fake_script() -- Frame.Master Control Script 
+coroutine.wrap(MSBII_fake_script)()
+local function HYVLV_fake_script() -- Frame.Master Control Script 
 	local script = Instance.new('Script', Frame)
 
 	local RankID = 0
@@ -795,11 +743,50 @@ local function ORGBP_fake_script() -- Frame.Master Control Script
 	script.Parent.TextButton.Visible = true
 	end
 end
-coroutine.wrap(ORGBP_fake_script)()
-local function JUKUTZO_fake_script() -- Teleport.Main 
+coroutine.wrap(HYVLV_fake_script)()
+local function WFYJQ_fake_script() -- Teleport.Request 
+	local script = Instance.new('Script', Teleport)
+
+	function Clean()
+		local TeleGui=script.Parent
+		TeleGui.TextFrame.PlayerName.Visible=true
+		TeleGui.TeleportButton.Visible=true
+		
+		TeleGui.TextFrame.Request.Visible=false
+		TeleGui.Yes.Visible=false
+		TeleGui.No.Visible=false
+	end
+	
+	Player=script.Parent.Parent.Parent
+	Character=Player.Character
+	
+	script.Parent.Yes.MouseButton1Click:connect(function()
+		local PlayerName=script.Parent.Player.Value
+		if not game.Players:FindFirstChild(PlayerName) then Clean() return end
+		
+		workspace[PlayerName].HumanoidRootPart.CFrame=Character.HumanoidRootPart.CFrame*CFrame.new(0,7.5,0)
+		Clean()
+	end)
+	
+	script.Parent.No.MouseButton1Click:connect(function()
+		local PlayerName=script.Parent.Player.Value
+		if not game.Players:FindFirstChild(PlayerName) then Clean() return end
+		
+		Clean()
+		local TeleGui=game.Players[PlayerName].PlayerGui.Teleport
+		TeleGui.Error.Visible=true
+		TeleGui.Error.Text=(PlayerName.." declined your teleport request.")
+		wait(2.5)
+		TeleGui.Error.Visible=false
+	end)
+	
+end
+coroutine.wrap(WFYJQ_fake_script)()
+local function NYCVU_fake_script() -- Teleport.Main 
 	local script = Instance.new('Script', Teleport)
 
 	Player=script.Parent.Parent.Parent
+	Player=game.Workspace
 	Character=Player.Character
 	
 	script.Parent.TeleportButton.MouseButton1Click:connect(function()
@@ -841,46 +828,25 @@ local function JUKUTZO_fake_script() -- Teleport.Main
 	end)
 	
 end
-coroutine.wrap(JUKUTZO_fake_script)()
-local function DRXQ_fake_script() -- Teleport.Request 
-	local script = Instance.new('Script', Teleport)
+coroutine.wrap(NYCVU_fake_script)()
+local function WMDHEM_fake_script() -- KillAll.Script 
+	local script = Instance.new('Script', KillAll)
 
-	function Clean()
-		local TeleGui=script.Parent
-		TeleGui.TextFrame.PlayerName.Visible=true
-		TeleGui.TeleportButton.Visible=true
-		
-		TeleGui.TextFrame.Request.Visible=false
-		TeleGui.Yes.Visible=false
-		TeleGui.No.Visible=false
-	end
-	
-	Player=script.Parent.Parent.Parent
-	Character=Player.Character
-	
-	script.Parent.Yes.MouseButton1Click:connect(function()
-		local PlayerName=script.Parent.Player.Value
-		if not game.Players:FindFirstChild(PlayerName) then Clean() return end
-		
-		workspace[PlayerName].HumanoidRootPart.CFrame=Character.HumanoidRootPart.CFrame*CFrame.new(0,7.5,0)
-		Clean()
-	end)
-	
-	script.Parent.No.MouseButton1Click:connect(function()
-		local PlayerName=script.Parent.Player.Value
-		if not game.Players:FindFirstChild(PlayerName) then Clean() return end
-		
-		Clean()
-		local TeleGui=game.Players[PlayerName].PlayerGui.Teleport
-		TeleGui.Error.Visible=true
-		TeleGui.Error.Text=(PlayerName.." declined your teleport request.")
-		wait(2.5)
-		TeleGui.Error.Visible=false
+	script.Parent.MouseButton1Click:Connect(function()
+		for i, v in pairs(workspace:GetChildren()) do
+			print("it got to pairs")
+			if v.ClassName == "Model" then
+				print("it got through class")
+				if v:FindFirstChild("Humanoid") then
+					v.Humanoid.Health = 0
+				end
+			end
+		end
 	end)
 	
 end
-coroutine.wrap(DRXQ_fake_script)()
-local function EHEAEY_fake_script() -- FOV.FOVLogic 
+coroutine.wrap(WMDHEM_fake_script)()
+local function DYHDWXI_fake_script() -- FOV.FOVLogic 
 	local script = Instance.new('LocalScript', FOV)
 
 	local UIS = game:GetService("UserInputService")
@@ -932,4 +898,16 @@ local function EHEAEY_fake_script() -- FOV.FOVLogic
 		end
 	end)
 end
-coroutine.wrap(EHEAEY_fake_script)()
+coroutine.wrap(DYHDWXI_fake_script)()
+local function NFKBS_fake_script() -- TextButton_2.LocalScript 
+	local script = Instance.new('LocalScript', TextButton_2)
+
+	local frame = script.Parent.Parent.Parent.main
+		
+	script.Parent.MouseButton1Click:connect(function()
+		
+	
+		frame:Destroy()
+	end)
+end
+coroutine.wrap(NFKBS_fake_script)()
